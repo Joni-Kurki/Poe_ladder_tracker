@@ -183,7 +183,7 @@
 			}
 			var n = '';
 			function PrintTable(){
-				var strTableHeading = 	'<table style="width:90%"><tr><th id="rank">Rank</th><th id="dead">Dead</th><th id="online">Online</th><th>Char name</th><th>Account name</th><th>Level</th><th>Class</th><th>Exp</th>';
+				var strTableHeading = 	'<table style="width:90%"><tr><th id="rank">Rank</th><th id="dead">Dead</th><th id="online">Online</th><th>Character name</th><th>Account name</th><th>Level</th><th>Class</th><th>Exp</th>';
 				console.log(getTime() + " print and str len: "+rows.length);
 				for(var i=0; i<rows.length; i++){
 					str += 	'<tr id="'+i+'"><td>'+rows[i]['Rank']+'</td><td>'+rows[i]['Dead']+'</td><td>'+rows[i]['Online']+'</td><td>'+rows[i]['Char name']+'</td>'+
@@ -202,6 +202,9 @@
 		</script>
 	</head>
 	<body onload="GetManyRows()" >
+		<p>This page tracks ranks 1-200 of PoE's SSF Hardcore ladder.
+		If the character is dead(true), it will be shown as <img src='resources/img/imgt.png'> and if alive(false) <img src='resources/img/imgf.png'></a>
+		If the character is online(true), it will be shown as <img src='resources/img/imgt.png'> and if not online(false) <img src='resources/img/imgf.png'></a></p>
 		<div id="test"></div>
 	</body>
 </html>
