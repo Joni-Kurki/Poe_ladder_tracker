@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<!--<link rel="stylesheet" type="text/css" href="css/main.css">-->
+		<title>Poe ladder test</title>
+		<style>
+
+			body {
+				font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	    		border-collapse: collapse;
+	    		text-align: left;
+			}
+
+			th {
+				border: 1px solid #ddd;
+			}
+
+			th#rank {
+				width: 30px;
+			}
+			th#online, th#dead {
+				width: 30px;
+			}
+			th#rank {
+				width: 30px;
+			}
+
+			tr:nth-child(even){background-color: #DDD;}
+
+		</style>
+		<script>
+			var rows = [];
+			var str = '';
+			var howManyTimes = 3;
+			function test_get_ladder(){
+				$.getJSON( 'http://api.pathofexile.com/ladders/ssf%20hardcore?limit=200', function( data ) {
+					var items = [];
+					
+					$.each( data["entries"], function( index, val ) {
+						items.push("<li id='" + index + "'>" );
+						items.push("Rank: "+this.rank + " | Dead: "+this.dead + " | Online: "+this.online+" | Character Details: ");
+						var count = 0;
+						$.each( this["character"], function() {
+							if(count == 0){
+								items.push(" | Char name: "+ this);
+								count++;
+							}else if(count == 1){
+								items.push(" | Level: "+ this);
+								count++;
+							}else if(count == 2){
+								items.push(" | Class: "+ this);
+								count++;
+							}else if(count == 3){
+								items.push(" | Experience: "+ this);
+								count++;
+							}
+						});
+						items.push(" Account details: ");
+						count = 0;
+						$.each( this["account"], function() {
+							if(count == 0){
+								items.push(" | Account name: "+ this);
+								count++;
+							}else{}
+							//console.log(this);
+							
+						});
+						items.push("</li>");
+					});
+				 	console.log(items);
+				 	var str = items.toString();
+				 	console.log(str);
+				 	str.search("[object Object]");
+				 	var counter = str.match(/object object/gi);
+					console.log(counter);
+					var temp = '';
+					while(counter >= 0){
+				 		temp = str.replace("[object Object]", "as");
+				 		counter--;
+				 	}
+				 	//}
+				 	console.log(temp);
+				 	
+					$( "<ul/>", {
+						"class": "my-new-list",
+						html: items.join( "" )
+					}).appendTo( "body" );
+					
+					//document.getElementById("test").innerHTML = str;
+				});
+			}
+			var items = [];
+			function get_ladder_info(offset = 0, times=1){
+				var rounds = 0;
+				var lastRound = false;
+
+				console.log(getTime() + " ranks "+offset+"-"+(offset+200-1));
+				$.getJSON( 'http://api.pathofexile.com/ladders/ssf%20hardcore?limit=200'+'&offset='+offset, function( data ) {
+					var r, d, o, cName, lvl, c, exp, aName = [];
+					//items.push('<table style="width:90%"><tr><th>Rank</th><th>Dead</th><th>Online</th><th>Char name</th><th>Level</th><th>Class</th><th>Exp</th><th>Account name</th>');
+					$.each( data["entries"], function( index, val ) {
+						items.push("<tr id='" + index + "'>" );
+						items.push("<td>"+this.rank + "</td><td>"+this.dead + "</td><td>"+this.online+"</td>");
+						r = this.rank;
+						d = this.dead;
+						o = this.online;
+						var count = 0;
+						$.each( this["character"], function() {
+							if(count == 0){
+								items.push("<td>"+ this);
+								cName = this;
+								count++;
+							}else if(count == 1){
+								items.push("</td><td>"+ this);
+								lvl = this;
+								count++;
+							}else if(count == 2){
+								items.push("</td><td>"+ this);
+								c = this;
+								count++;
+							}else if(count == 3){
+								items.push("</td><td>"+ this);
+								exp = this;
+								count++;
+							}
+						});
+						items.push("</td>");
+						count = 0;
+						$.each( this["account"], function() {
+							if(count == 0){
+								items.push("<td>"+ this);
+								aName = this;
+								count++;
+							}else{}
+							//console.log(this);
+							
+						});
+						items.push("<td></tr>");
+						rows.push({"Rank":r, "Dead":d, "Online":o, "Char name":cName, "Level":lvl, "Class":c, "Exp":exp, "Account name":aName})
+					});
+					/*
+					$( "<ul/>", {
+						"class": "my-new-list",
+						html: items.join( "" )
+					}).appendTo( "body" );*/
+					
+					
+					if(times == 9)
+						lastRound = true;
+					//get_ladder_info(offset+200,times2);
+					//if(lastRound)
+						PrintTable();
+				});
+			
+			}
+			function GetManyRows(){
+				for(var i=0; i<1; i++){
+					myvar = setInterval(get_ladder_info((200*i),i),i*1000);
+					//setTimeout(getTime(),i*800);
+					setTimeout(clearInterval(myvar), 5000);
+				}
+			}
+			function getTime(){ // palauttaa timestampin kellonajasta
+				var timenow = new Date();
+				var hh = timenow.getHours();
+				var mm = timenow.getMinutes();
+				var ss = timenow.getSeconds();
+				var ms = timenow.getMilliseconds();
+				if(hh < 10)
+					hh = "0"+hh;
+				if(mm < 10)
+					mm = "0"+mm;
+				if(ss < 10)
+					ss = "0"+ss;
+				if(ms < 10)
+					ms = "0"+ms;
+				if(ms < 100)
+					ms = "00"+ms;
+				//console.log(hh+":"+mm+":"+ss+":"+ms);
+				return "["+hh+":"+mm+":"+ss+":"+ms+"]";
+			}
+			var n = '';
+			function PrintTable(){
+				var strTableHeading = 	'<table style="width:90%"><tr><th id="rank">Rank</th><th id="dead">Dead</th><th id="online">Online</th><th>Char name</th><th>Account name</th><th>Level</th><th>Class</th><th>Exp</th>';
+				console.log(getTime() + " print and str len: "+rows.length);
+				for(var i=0; i<rows.length; i++){
+					str += 	'<tr id="'+i+'"><td>'+rows[i]['Rank']+'</td><td>'+rows[i]['Dead']+'</td><td>'+rows[i]['Online']+'</td><td>'+rows[i]['Char name']+'</td>'+
+							'<td>'+rows[i]['Account name']+'</td><td>'+rows[i]['Level']+'</td><td>'+rows[i]['Class']+'</td><td>'+rows[i]['Exp']+'</td>';
+				}
+				n = str.search("false");
+				var newstr = str;
+				for (var i = 0; i < 400; i++) {
+					newstr = newstr.replace("false", "<img src='resources/img/imgf.png'></a>");
+				}
+				for (var i = 0; i < 400; i++) {
+					newstr = newstr.replace("true", "<img src='resources/img/imgt.png'></a>");
+				}
+				document.getElementById("test").innerHTML = strTableHeading+newstr;
+			}
+		</script>
+	</head>
+	<body onload="GetManyRows()" >
+		<div id="test"></div>
+	</body>
+</html>

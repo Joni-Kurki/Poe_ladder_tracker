@@ -1,0 +1,29 @@
+{
+"total":15000,"entries":
+	[
+		{
+			"rank":1,"dead":false,"online":false,"character":
+				{
+					"name":"EthanTupperware","level":100,"class":"Raider","experience":4250334444
+				}
+				,"account":
+				{
+				"name":"Etup","challenges":
+					{ "total":40 }
+				,"twitch":
+					{ "name":"etup" }
+				}
+		},
+		{
+			"rank":2,"dead":false,"online":false,"character":
+				{
+					"name":"Odangler","level":100,"class":"Necromancer","experience":4250334444
+				}
+				,"account":
+				{
+				"name":"odang","challenges":
+						{ "total":25 }
+				}	
+		}
+	]
+}
