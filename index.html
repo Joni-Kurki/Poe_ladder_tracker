@@ -27,6 +27,10 @@
 				width: 30px;
 			}
 
+			input {
+				width: 90%;
+			}
+
 			tr:nth-child(even){background-color: #DDD;}
 
 		</style>
@@ -92,36 +96,48 @@
 				});
 			}
 			var items = [];
+			var currentLeague = 5;
 			function get_ladder_info(offset = 0, times=1){
+				rows = [];
 				var rounds = 0;
 				var lastRound = false;
 
+				var ladderAPIpaths = [ 	'http://api.pathofexile.com/ladders/legacy?limit=200', 
+										'http://api.pathofexile.com/ladders/hardcore%20legacy?limit=200',
+										'http://api.pathofexile.com/ladders/standard?limit=200',
+										'http://api.pathofexile.com/ladders/hardcore?limit=200',
+										'http://api.pathofexile.com/ladders/ssf%20legacy?limit=200',
+										'http://api.pathofexile.com/ladders/ssf%20hc%20legacy?limit=200',
+										'http://api.pathofexile.com/ladders/ssf%20standard?limit=200',
+										'http://api.pathofexile.com/ladders/ssf%20hardcore?limit=200'];
+				
+
 				console.log(getTime() + " ranks "+offset+"-"+(offset+200-1));
-				$.getJSON( 'http://api.pathofexile.com/ladders/ssf%20hardcore?limit=200'+'&offset='+offset, function( data ) {
+				$.getJSON( ladderAPIpaths[currentLeague]+'&offset='+offset, function( data ) {
 					var r, d, o, cName, lvl, c, exp, aName = [];
 					//items.push('<table style="width:90%"><tr><th>Rank</th><th>Dead</th><th>Online</th><th>Char name</th><th>Level</th><th>Class</th><th>Exp</th><th>Account name</th>');
 					$.each( data["entries"], function( index, val ) {
-						items.push("<tr id='" + index + "'>" );
-						items.push("<td>"+this.rank + "</td><td>"+this.dead + "</td><td>"+this.online+"</td>");
+						//items.push("<tr id='" + index + "'>" );
+						//items.push("<td>"+this.rank + "</td><td>"+this.dead + "</td><td>"+this.online+"</td>");
 						r = this.rank;
 						d = this.dead;
 						o = this.online;
 						var count = 0;
 						$.each( this["character"], function() {
 							if(count == 0){
-								items.push("<td>"+ this);
+								//items.push("<td>"+ this);
 								cName = this;
 								count++;
 							}else if(count == 1){
-								items.push("</td><td>"+ this);
+								//items.push("</td><td>"+ this);
 								lvl = this;
 								count++;
 							}else if(count == 2){
-								items.push("</td><td>"+ this);
+								//items.push("</td><td>"+ this);
 								c = this;
 								count++;
 							}else if(count == 3){
-								items.push("</td><td>"+ this);
+								//items.push("</td><td>"+ this);
 								exp = this;
 								count++;
 							}
@@ -130,14 +146,14 @@
 						count = 0;
 						$.each( this["account"], function() {
 							if(count == 0){
-								items.push("<td>"+ this);
+								//items.push("<td>"+ this);
 								aName = this;
 								count++;
 							}else{}
 							//console.log(this);
 							
 						});
-						items.push("<td></tr>");
+						//items.push("<td></tr>");
 						rows.push({"Rank":r, "Dead":d, "Online":o, "Char name":cName, "Level":lvl, "Class":c, "Exp":exp, "Account name":aName})
 					});
 					/*
@@ -151,18 +167,18 @@
 						lastRound = true;
 					//get_ladder_info(offset+200,times2);
 					//if(lastRound)
-						PrintTable();
+					PrintTable();
 				});
 			
 			}
 			function GetManyRows(){
 				for(var i=0; i<1; i++){
-					myvar = setInterval(get_ladder_info((200*i),i),i*1000);
+					myvar = setInterval(get_ladder_info((200*8),i),i*1000);
 					//setTimeout(getTime(),i*800);
 					setTimeout(clearInterval(myvar), 5000);
 				}
 			}
-			function getTime(){ // palauttaa timestampin kellonajasta
+			function getTime(){ // palauttaa timestampin kellonajasta, käytetään consolessa debuggaukseen
 				var timenow = new Date();
 				var hh = timenow.getHours();
 				var mm = timenow.getMinutes();
@@ -184,29 +200,104 @@
 			var n = '';
 			function PrintTable(){
 				var strTableHeading = 	'<table style="width:90%"><tr><th id="rank">Rank</th><th id="dead">Dead</th><th id="online">Online</th><th>Character name</th><th>Account name</th><th>Level</th><th>Class</th><th>Exp</th>';
-				console.log(getTime() + " print and str len: "+rows.length);
+				//console.log(getTime() + " print and str len: "+rows.length);
 				for(var i=0; i<rows.length; i++){
-					str += 	'<tr id="'+i+'"><td>'+rows[i]['Rank']+'</td><td>'+rows[i]['Dead']+'</td><td>'+rows[i]['Online']+'</td><td>'+rows[i]['Char name']+'</td>'+
-							'<td>'+rows[i]['Account name']+'</td><td>'+rows[i]['Level']+'</td><td>'+rows[i]['Class']+'</td><td>'+rows[i]['Exp']+'</td>';
+					str += 	'<tr id="'+i+'"><td>'+rows[i]['Rank']+'</td><td class="dead">'+rows[i]['Dead']+'</td><td class="online">'+rows[i]['Online']+'</td><td>'+rows[i]['Char name']+'</td><td>'+rows[i]['Account name']+'</td><td>'+rows[i]['Level']+'</td><td>'+rows[i]['Class']+'</td><td>'+rows[i]['Exp']+'</td>';
 				}
-				n = str.search("false");
 				var newstr = str;
-				for (var i = 0; i < 400; i++) {
-					newstr = newstr.replace("false", "<img src='resources/img/imgf.png'></a>");
+				for (var i = 0; i < 200; i++) {
+					newstr = newstr.replace('<td class="dead">true', "<td class='dead'><img src='resources/img/img_dead.png'></a>");
 				}
-				for (var i = 0; i < 400; i++) {
-					newstr = newstr.replace("true", "<img src='resources/img/imgt.png'></a>");
+				for (var i = 0; i < 200; i++) {
+					newstr = newstr.replace('<td class="dead">false', "<td class='dead'><img src='resources/img/img_thump.png'></a>");
+				}
+				for (var i = 0; i < 200; i++) {
+					newstr = newstr.replace('<td class="online">true', "<td class='dead'><img src='resources/img/img_green.png'></a>");
+				}
+				for (var i = 0; i < 200; i++) {
+					newstr = newstr.replace('<td class="online">false', "<td class='dead'><img src='resources/img/img_red.png'></a>");
 				}
 				document.getElementById("test").innerHTML = strTableHeading+newstr;
+				SetLeagueHeader();
+			}
+			function SetLeague(league=0){
+				var rankValue = document.getElementById("rangeinput").value-1;
+
+				if(isNaN(rankValue)){
+					document.getElementById("test").innerHTML = "<div class='warning'>Please give value!</div>";
+					return;
+				}
+				//rangeInput.defaultValue = 0;
+
+				$("test").html("");
+				rows = [];
+				str = '';
+				currentLeague  = league;
+				get_ladder_info(rankValue,0);
+				SleepFor(1000);
+				PrintTable();
+			}
+
+			function SleepFor(ms){
+				var t = new Date().getTime();
+				while(t + ms >= new Date().getTime()){}
+			}
+
+			function SetLeagueHeader(){
+				switch(currentLeague){
+					case 0:
+						document.getElementById("league_header").innerHTML = "<h1>Legacy League</h1>";
+						break;
+					case 1:
+						document.getElementById("league_header").innerHTML = "<h1>Hardcore Legacy League</h1>";
+						break;
+					case 2:
+						document.getElementById("league_header").innerHTML = "<h1>Standard League</h1>";
+						break;
+					case 3:
+						document.getElementById("league_header").innerHTML = "<h1>Hardcore League</h1>";
+						break;
+					case 4:
+						document.getElementById("league_header").innerHTML = "<h1>SSF Legacy League</h1>";
+						break;
+					case 5:
+						document.getElementById("league_header").innerHTML = "<h1>SSF Hardcore Legacy League</h1>";
+						break;
+					case 6:
+						document.getElementById("league_header").innerHTML = "<h1>SSF Standard League</h1>";
+						break;
+					case 7:
+						document.getElementById("league_header").innerHTML = "<h1>SSF Hardcore League</h1>";
+						break;
+				}
+			}
+			function setRangeValue(newValue){
+				document.getElementById("valueSpan").innerHTML = "Pulling ranks: "+newValue + " - " + (parseInt(newValue)+199);
 			}
 		</script>
 	</head>
-	<body onload="GetManyRows()" >
-		<p>This page tracks ranks 1-200 of PoE's SSF Hardcore ladder.</br>
-		If the character is dead(true), it will be shown as <img src='resources/img/imgt.png'> and if alive(false) <img src='resources/img/imgf.png'></a></br>
-		If the character is online(true), it will be shown as <img src='resources/img/imgt.png'> and if not online(false) <img src='resources/img/imgf.png'></a></br>
-		The data is from GGG's own API.
+	<body onload="setRangeValue(0)">
+		<p>This page tracks player rankings of PoE's different ladders. You can choose the ladder by pressing the button below.</br>
+		If the character is dead, it will be shown as <img src='resources/img/img_dead.png'> and if alive <img src='resources/img/img_thump.png'></a></br>
+		If the character is online, it will be shown as <img src='resources/img/img_green.png'> and if not online <img src='resources/img/img_red.png'></a></br>
+		The data is pulled from GGG's own API. It's possible to get maximum of 200 ranks per refresh. 
+		Specify from which range onwards you want pull the ranks. e.g. 100 => 100-299 and then press league button.</br></br>
+		<!--<input id="rankRange">-->
+		<span id="valueSpan"></span></br>
+		<input type="range" id="rangeinput" value="1" min="1" max="14800" oninput="setRangeValue(this.value)" onchange="setRangeValue(this.value)">
 		</p>
+		
+		<div id="button_row">
+			<button onclick="SetLeague(0)">Legacy League</button>
+			<button onclick="SetLeague(1)">Hardcore Legacy League</button>
+			<button onclick="SetLeague(2)">Standard League</button>
+			<button onclick="SetLeague(3)">Hardcore League</button>
+			<button onclick="SetLeague(4)">SSF Legacy League</button>
+			<button onclick="SetLeague(5)">SSF Hardcore Legacy League</button>
+			<button onclick="SetLeague(6)">SSF Standard League</button>
+			<button onclick="SetLeague(7)">SSF Hardcore League</button>
+		</div>
+		<div id="league_header"></div>
 		<div id="test"></div>
 	</body>
 </html>
