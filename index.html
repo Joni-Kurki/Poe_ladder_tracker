@@ -99,7 +99,26 @@
 			var currentLeague = 5;
 
 			var experience = [];
-								
+					
+			function getHighestLevel(){
+				var currentHighestLevel = 0;
+				for(var i=0; i<rows.length; i++){
+					if(rows[i]['Level'] > currentHighestLevel)
+						currentHighestLevel = rows[i]['Level'];
+				}
+				console.log("hi "+currentHighestLevel);
+				return currentHighestLevel;
+			}
+			function getLowestLevel(){
+				var currentHighestLevel = 100;
+				for(var i=0; i<rows.length; i++){
+					if(rows[i]['Level'] < currentHighestLevel)
+						currentHighestLevel = rows[i]['Level'];
+				}
+				console.log("hi "+currentHighestLevel);
+				return currentHighestLevel;
+			}
+
 			function setExperience(){
 				experience.push({ level:1, 	min:0, max:524 });
 				experience.push({ level:2, 	min:525, max:1759 });
@@ -201,19 +220,14 @@
 				experience.push({ level:98, min:3638186694, max:3932818529 });
 				experience.push({ level:99, min:3932818530, max:4250334443 });
 				experience.push({ level:100, min:4250334444, max:4250334445 });
-				//console.log(experience[89]["min"]);
-				//var currentxp = 2993698600;
-				//var currentlevel = 0;
-				//getLevelPercentage(2993698600);
 			}
 
 			function getLevelPercentage(charExp){
-				if(currentLeague == 7)
+				if(currentLeague == 7) // BUG HERE, tässä liigassa vaan
 					return;
 				var currentxp = charExp;
 				for(var i=0; i<experience.length; i++){
 					if(currentxp >= experience[i]["min"] && currentxp <= experience[i]["max"]){
-						console.log();
 						//console.log((((currentxp-experience[i]["min"])/(experience[i]["max"]))*100).toFixed(2));
 						var minxp = experience[i]["min"];
 						var maxxp = experience[i]["max"];
@@ -228,9 +242,8 @@
 						//console.log("level is "+i);
 					}
 				}
-				//console.log(charExp+" ("+percentage.toFixed(0)+"%)");
 				percentage = percentage.toFixed();
-				return charExp+" ("+percentage+"%)";
+				return charExp+' <span id="xpPercentage">('+percentage+'%)</span>';
 			}
 
 			function get_ladder_info(offset = 0, times=1){
@@ -383,28 +396,28 @@
 			function SetLeagueHeader(){
 				switch(currentLeague){
 					case 0:
-						document.getElementById("league_header").innerHTML = "<h1>Legacy League</h1>";
+						document.getElementById("league_header").innerHTML = "<h1>Legacy League</h1></br><h4>Characters are lvl "+getHighestLevel()+ " - "+getLowestLevel();
 						break;
 					case 1:
-						document.getElementById("league_header").innerHTML = "<h1>Hardcore Legacy League</h1>";
+						document.getElementById("league_header").innerHTML = "<h1>Hardcore Legacy League</h1></br><h4>Characters are lvl "+getHighestLevel()+ " - "+getLowestLevel();
 						break;
 					case 2:
-						document.getElementById("league_header").innerHTML = "<h1>Standard League</h1>";
+						document.getElementById("league_header").innerHTML = "<h1>Standard League</h1></br><h4>Characters are lvl "+getHighestLevel()+ " - "+getLowestLevel();
 						break;
 					case 3:
-						document.getElementById("league_header").innerHTML = "<h1>Hardcore League</h1>";
+						document.getElementById("league_header").innerHTML = "<h1>Hardcore League</h1></br><h4>Characters are lvl "+getHighestLevel()+ " - "+getLowestLevel();
 						break;
 					case 4:
-						document.getElementById("league_header").innerHTML = "<h1>SSF Legacy League</h1>";
+						document.getElementById("league_header").innerHTML = "<h1>SSF Legacy League</h1></br><h4>Characters are lvl "+getHighestLevel()+ " - "+getLowestLevel();
 						break;
 					case 5:
-						document.getElementById("league_header").innerHTML = "<h1>SSF Hardcore Legacy League</h1>";
+						document.getElementById("league_header").innerHTML = "<h1>SSF Hardcore Legacy League</h1></br><h4>Characters are lvl "+getHighestLevel()+ " - "+getLowestLevel();
 						break;
 					case 6:
-						document.getElementById("league_header").innerHTML = "<h1>SSF Standard League</h1>";
+						document.getElementById("league_header").innerHTML = "<h1>SSF Standard League</h1></br><h4>Characters are lvl "+getHighestLevel()+ " - "+getLowestLevel();
 						break;
 					case 7:
-						document.getElementById("league_header").innerHTML = "<h1>SSF Hardcore League</h1>";
+						document.getElementById("league_header").innerHTML = "<h1>SSF Hardcore League</h1></br><h4>Characters are lvl "+getHighestLevel()+ " - "+getLowestLevel();
 						break;
 				}
 			}
