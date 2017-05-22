@@ -97,7 +97,144 @@
 			}
 			var items = [];
 			var currentLeague = 5;
+
+			var experience = [];
+								
+			function setExperience(){
+				experience.push({ level:1, 	min:0, max:524 });
+				experience.push({ level:2, 	min:525, max:1759 });
+				experience.push({ level:3, 	min:1760, max:3780 });
+				experience.push({ level:4, 	min:3781, max:7183 });
+				experience.push({ level:5, 	min:7184, max:12185 });
+				experience.push({ level:6, 	min:12186, max:19323 });
+				experience.push({ level:7, 	min:19324, max:29376 });
+				experience.push({ level:8, 	min:29377, max:43180 });
+				experience.push({ level:9, 	min:43181, max:61692 });
+				experience.push({ level:10, min:61693, max:85989 });
+				experience.push({ level:11, min:85990, max:117505 });
+				experience.push({ level:12, min:117506, max:157383 });
+				experience.push({ level:13, min:157384, max:207735 });
+				experience.push({ level:14, min:207736, max:269996 });
+				experience.push({ level:15, min:269997, max:346461 });
+				experience.push({ level:16, min:346462, max:439267 });
+				experience.push({ level:17, min:439268, max:551294 });
+				experience.push({ level:18, min:551295, max:685170 });
+				experience.push({ level:19, min:685171, max:843708 });
+				experience.push({ level:20, min:843709, max:1030733 });
+				experience.push({ level:21, min:1030734, max:1249628 });
+				experience.push({ level:22, min:1249629, max:1504994 });
+				experience.push({ level:23, min:1504995, max:1800846 });
+				experience.push({ level:24, min:1800847, max:2142651 });
+				experience.push({ level:25, min:2142652, max:2535121 });
+				experience.push({ level:26, min:2535122, max:2984676 });
+				experience.push({ level:27, min:2984677, max:3496797 });
+				experience.push({ level:28, min:3496798, max:4080654 });
+				experience.push({ level:29, min:4080655, max:4742835 });
+				experience.push({ level:30, min:4742836, max:5490246 });
+				experience.push({ level:31, min:5490247, max:6334392 });
+				experience.push({ level:32, min:6334393, max:7283445 });
+				experience.push({ level:33, min:7283446, max:8384397 });
+				experience.push({ level:34, min:8384398, max:9541109 });
+				experience.push({ level:35, min:9541110, max:10874350 });
+				experience.push({ level:36, min:10874351, max:12361841 });
+				experience.push({ level:37, min:12361842, max:14018288 });
+				experience.push({ level:38, min:14018289, max:15859431 });
+				experience.push({ level:39, min:15859432, max:17905633 });
+				experience.push({ level:40, min:17905634, max:20171470 });
+				experience.push({ level:41, min:20171471, max:22679998 });
+				experience.push({ level:42, min:22679999, max:25456122 });
+				experience.push({ level:43, min:25456123, max:28517856 });
+				experience.push({ level:44, min:28517857, max:31897770 });
+				experience.push({ level:45, min:31897771, max:35621446 });
+				experience.push({ level:46, min:35621447, max:39721016 });
+				experience.push({ level:47, min:39721017, max:44225460 });
+				experience.push({ level:48, min:44225461, max:49176559 });
+				experience.push({ level:49, min:49176560, max:54607466 });
+				experience.push({ level:50, min:54607467, max:60565334 });
+				experience.push({ level:51, min:60565335, max:67094244 });
+				experience.push({ level:52, min:67094245, max:74247658 });
+				experience.push({ level:53, min:74247659, max:82075626 });
+				experience.push({ level:54, min:82075627, max:90631040 });
+				experience.push({ level:55, min:90631041, max:99984973 });
+				experience.push({ level:56, min:99984974, max:110197514 });
+				experience.push({ level:57, min:110197515, max:121340160 });
+				experience.push({ level:58, min:121340161, max:133497201 });
+				experience.push({ level:59, min:133497202, max:146749361 });
+				experience.push({ level:60, min:146749362, max:161191119 });
+				experience.push({ level:61, min:161191120, max:176922627 });
+				experience.push({ level:62, min:176922628, max:194049892 });
+				experience.push({ level:63, min:194049893, max:212684945 });
+				experience.push({ level:64, min:212684946, max:232956710 });
+				experience.push({ level:65, min:232956711, max:255001619 });
+				experience.push({ level:66, min:255001620, max:278952402 });
+				experience.push({ level:67, min:278952403, max:304972235 });
+				experience.push({ level:68, min:304972236, max:333233647 });
+				experience.push({ level:69, min:333233648, max:363906162 });
+				experience.push({ level:70, min:363906163, max:397194040 });
+				experience.push({ level:71, min:397194041, max:433312944 });
+				experience.push({ level:72, min:433312945, max:472476369 });
+				experience.push({ level:73, min:472476370, max:514937179 });
+				experience.push({ level:74, min:514937180, max:560961897 });
+				experience.push({ level:75, min:560961898, max:610815861 });
+				experience.push({ level:76, min:610815862, max:664824415 });
+				experience.push({ level:77, min:664824416, max:723298168 });
+				experience.push({ level:78, min:723298169, max:786612663 });
+				experience.push({ level:79, min:786612664, max:786612663 });
+				experience.push({ level:80, min:855129128, max:855129127 });
+				experience.push({ level:81, min:929261318, max:1009443794 });
+				experience.push({ level:82, min:1009443795, max:1096169524 });
+				experience.push({ level:83, min:1096169525, max:1189918241 });
+				experience.push({ level:84, min:1189918242, max:1291270349 });
+				experience.push({ level:85, min:1291270350, max:1400795256 });
+				experience.push({ level:86, min:1400795257, max:1519130325 });
+				experience.push({ level:87, min:1519130326, max:1646943473 });
+				experience.push({ level:88, min:1646943474, max:1784977295 });
+				experience.push({ level:89, min:1784977296, max:1934009686 });
+				experience.push({ level:90, min:1934009687, max:2094900290 });
+				experience.push({ level:91, min:2094900291, max:2268549085 });
+				experience.push({ level:92, min:2268549086, max:2455921255 });
+				experience.push({ level:93, min:2455921256, max:2658074991 });
+				experience.push({ level:94, min:2658074992, max:2876116900 });
+				experience.push({ level:95, min:2876116901, max:3111280299 });
+				experience.push({ level:96, min:3111280300, max:3364828161 });
+				experience.push({ level:97, min:3364828162, max:3638186693 });
+				experience.push({ level:98, min:3638186694, max:3932818529 });
+				experience.push({ level:99, min:3932818530, max:4250334443 });
+				experience.push({ level:100, min:4250334444, max:4250334445 });
+				//console.log(experience[89]["min"]);
+				//var currentxp = 2993698600;
+				//var currentlevel = 0;
+				//getLevelPercentage(2993698600);
+			}
+
+			function getLevelPercentage(charExp){
+				if(currentLeague == 7)
+					return;
+				var currentxp = charExp;
+				for(var i=0; i<experience.length; i++){
+					if(currentxp >= experience[i]["min"] && currentxp <= experience[i]["max"]){
+						console.log();
+						//console.log((((currentxp-experience[i]["min"])/(experience[i]["max"]))*100).toFixed(2));
+						var minxp = experience[i]["min"];
+						var maxxp = experience[i]["max"];
+
+						var totalLevelExp = maxxp-minxp;
+						var toNextLvl = (maxxp - currentxp)+1;
+						var percentage = (100-((toNextLvl/totalLevelExp)*100));
+						if(percentage < 0)
+							percentage *= -1; 
+						//console.log("current level is "+(i+1) + " and exp: "+currentxp+" ("+percentage.toFixed(0)+"%)");
+					}else{
+						//console.log("level is "+i);
+					}
+				}
+				//console.log(charExp+" ("+percentage.toFixed(0)+"%)");
+				percentage = percentage.toFixed();
+				return charExp+" ("+percentage+"%)";
+			}
+
 			function get_ladder_info(offset = 0, times=1){
+				setExperience();
 				rows = [];
 				var rounds = 0;
 				var lastRound = false;
@@ -202,7 +339,7 @@
 				var strTableHeading = 	'<table style="width:90%"><tr><th id="rank">Rank</th><th id="dead">Dead</th><th id="online">Online</th><th>Character name</th><th>Account name</th><th>Level</th><th>Class</th><th>Exp</th>';
 				//console.log(getTime() + " print and str len: "+rows.length);
 				for(var i=0; i<rows.length; i++){
-					str += 	'<tr id="'+i+'"><td>'+rows[i]['Rank']+'</td><td class="dead">'+rows[i]['Dead']+'</td><td class="online">'+rows[i]['Online']+'</td><td>'+rows[i]['Char name']+'</td><td>'+rows[i]['Account name']+'</td><td>'+rows[i]['Level']+'</td><td>'+rows[i]['Class']+'</td><td>'+rows[i]['Exp']+'</td>';
+					str += 	'<tr id="'+i+'"><td>'+rows[i]['Rank']+'</td><td class="dead">'+rows[i]['Dead']+'</td><td class="online">'+rows[i]['Online']+'</td><td>'+rows[i]['Char name']+'</td><td>'+rows[i]['Account name']+'</td><td>'+rows[i]['Level']+'</td><td>'+rows[i]['Class']+'</td><td>'+getLevelPercentage(rows[i]['Exp'])+'</td>';
 				}
 				var newstr = str;
 				for (var i = 0; i < 200; i++) {
